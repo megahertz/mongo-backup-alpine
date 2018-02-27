@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "${BACKUP_SHEDULE} /usr/local/bin/backup" > /etc/crontab
+exec "/usr/bin/supercronic" "/etc/crontab"

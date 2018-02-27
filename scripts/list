@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cd ${BACKUP_PATH}
+
+echo "Available backups: "
+ls -lh | tail -n +2 | awk '{ gsub(".gz", "", $9); print $5,"\t",$9 }'
+
+TOTAL=$(du -h | cut -f1)
+AVAILABLE=$(df -h /data/backup | tail -n 1 | awk '{ print $4 }')
+SIZE_MSG="Total size: ${TOTAL}, available: ${AVAILABLE}"
+echo ${SIZE_MSG} | sed -r 's/./-/g'
+echo ${SIZE_MSG}

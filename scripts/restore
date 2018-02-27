@@ -1,0 +1,4 @@
+#!/bin/sh
+
+INPUT_FILE="${BACKUP_PATH}/$1.gz"
+mongorestore --uri ${MONGO_URL} --gzip --archive=${INPUT_FILE}
