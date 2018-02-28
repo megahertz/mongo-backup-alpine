@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+
+.check-env
+
 DATE=$(date "+%Y-%m-%d-%H-%S-%M")
 OUT_FILE="${BACKUP_PATH}/${DATE}.gz"
 

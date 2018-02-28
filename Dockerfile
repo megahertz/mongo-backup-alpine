@@ -1,16 +1,25 @@
 FROM alpine:3.7
 
-ENV MONGO_URL mongodb://mongo
 ENV BACKUP_LEFETIME 10
 ENV BACKUP_PATH /data/backup
-ENV BACKUP_SHEDULE "0     4     *     *     *"
+ENV BACKUP_SCHEDULE "0 4 * * *"
 
 VOLUME ${BACKUP_PATH}
 
 RUN set -ex; \
 # Install mongodb-tools
     apk add --no-cache mongodb-tools; \
-    \
+# Remove unnecessary tools to reduce image size
+    cd /usr/bin; \
+    rm \
+      bsondump \
+      mongoexport \
+      mongofiles \
+      mongoimport \
+      mongooplog \
+      mongoreplay \
+      mongostat \
+      mongotop; \
 # Download supercronic
     export \
       SUPERCRONIC_URL_ROOT=https://github.com/aptible/supercronic \
@@ -23,8 +32,8 @@ RUN set -ex; \
     chmod +x "$SUPERCRONIC"
 
 
-COPY scripts/* /usr/local/bin/
-RUN chmod +x /usr/local/bin/*
+COPY ["scripts/*", "scripts/.*", "/usr/local/bin/"]
+RUN chmod +x /usr/local/bin/* /usr/local/bin/.*
 
 WORKDIR ${BACKUP_PATH}
 

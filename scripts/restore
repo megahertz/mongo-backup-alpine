@@ -1,4 +1,24 @@
 #!/bin/sh
 
-INPUT_FILE="${BACKUP_PATH}/$1.gz"
-mongorestore --uri ${MONGO_URL} --gzip --archive=${INPUT_FILE}
+set -e
+
+.check-env
+
+BACKUP_FILE="$1"
+
+if [ -z "${BACKUP_FILE}" ]; then
+  echo "Usage: restore BACKUP"
+  echo "Restore a database from the BACKUP file." \
+  list --no-total
+  exit 1
+fi
+
+ARCHIVE="${BACKUP_PATH}/${BACKUP_FILE}"
+
+if [ ! -f "${ARCHIVE}" ]; then
+  echo "Backup file '${BACKUP_FILE}' doesn't exists. " >&2
+  list --no-total
+  exit 1
+fi
+
+mongorestore --uri ${MONGO_URL} --gzip --archive=${ARCHIVE}

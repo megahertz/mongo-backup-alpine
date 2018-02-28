@@ -1,12 +1,25 @@
 #!/bin/sh
 
+set -e
+
+PRINT_TOTAL=true
+
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    --no-total) PRINT_TOTAL=false ;;
+  esac;
+  shift;
+done
+
 cd ${BACKUP_PATH}
 
 echo "Available backups: "
-ls -lh | tail -n +2 | awk '{ gsub(".gz", "", $9); print $5,"\t",$9 }'
+ls -lh | tail -n +2 | awk '{ print $5,"\t",$9 }'
 
-TOTAL=$(du -h | cut -f1)
-AVAILABLE=$(df -h /data/backup | tail -n 1 | awk '{ print $4 }')
-SIZE_MSG="Total size: ${TOTAL}, available: ${AVAILABLE}"
-echo ${SIZE_MSG} | sed -r 's/./-/g'
-echo ${SIZE_MSG}
+if [ ${PRINT_TOTAL} = true ]; then
+  TOTAL=$(du -h | cut -f1)
+  AVAILABLE=$(df -h /data/backup | tail -n 1 | awk '{ print $4 }')
+  SIZE_MSG="Total size: ${TOTAL}, available: ${AVAILABLE}"
+  echo ${SIZE_MSG} | sed -r 's/./-/g'
+  echo ${SIZE_MSG}
+fi

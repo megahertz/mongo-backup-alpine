@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ -z "${MONGO_URL}" ]; then
+  echo "Error: MONGO_URL environment variable isn't set" >&2
+  echo "How to set MONGO_URL:"
+  printf "  docker run -v /backup:/data/backup"
+  echo " -e MONGO_URL=mongodb://mongohost megahertz/mongo-backup-alpine"
+  exit 1
+fi
