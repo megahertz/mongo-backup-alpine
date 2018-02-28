@@ -4,7 +4,7 @@ set -e
 
 .check-env
 
-DATE=$(date "+%Y-%m-%d-%H-%S-%M")
+DATE=$(date "+%Y-%m-%d-%H-%M-%S")
 OUT_FILE="${BACKUP_PATH}/${DATE}.gz"
 
 # Remove old backups
