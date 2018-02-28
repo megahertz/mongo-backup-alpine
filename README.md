@@ -94,7 +94,7 @@ Example:
 ```sh
 docker run -e MONGO_URL=mongodb://host \
   -v /backup:/data/backup megahertz/mongo-backup-alpine \
-  restore 2018-02-01-04-00-00.gz
+  restore 2018-02-01-04-00-00.gz --drop
 ```
 
 ## License
