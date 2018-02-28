@@ -1,7 +1,8 @@
 FROM alpine:3.7
 
-ENV BACKUP_LEFETIME=10 \
+ENV BACKUP_LIFETIME=10 \
     BACKUP_PATH=/data/backup \
+    BACKUP_PATTERN="+%Y-%m-%d-%H-%M-%S" \
     BACKUP_SCHEDULE="0 4 * * *"
 
 VOLUME ${BACKUP_PATH}

@@ -4,10 +4,10 @@ set -e
 
 .check-env
 
-DATE=$(date "+%Y-%m-%d-%H-%M-%S")
+DATE=$(date "${BACKUP_PATTERN}")
 OUT_FILE="${BACKUP_PATH}/${DATE}.gz"
 
 # Remove old backups
-find ${BACKUP_PATH} -mtime +${BACKUP_LEFETIME} -type f -delete
+find ${BACKUP_PATH} -mtime +${BACKUP_LIFETIME} -type f -delete
 
-mongodump --uri ${MONGO_URL} --gzip --archive=${OUT_FILE}
+mongodump --uri ${MONGO_URL} --gzip --archive=${OUT_FILE} ${@}

@@ -20,11 +20,12 @@ path on host machine to store backups.
 
 #### Environment variables:
 
-Name            | Default     | Description
-----------------|-------------|------------
-MONGO_URL       | (required)  | Connection string to MongoDB
-BACKUP_LEFETIME | 10          | Delete backups, older than N days
-BACKUP_SCHEDULE | "0 4 * * *" | How often to make backup, crontab format
+Name            | Default              | Description
+----------------|----------------------|------------
+MONGO_URL       | (required)           | Connection string to MongoDB
+BACKUP_LIFETIME | 10                   | Delete backups older than N days
+BACKUP_PATTERN  | "+%Y-%m-%d-%H-%M-%S" | Pattern for backup name
+BACKUP_SCHEDULE | "0 4 * * *"          | How often to make backup, crontab format
 
 By default, the service makes backup each day at 4am. If you're not
 familar with crontab, you can
@@ -59,6 +60,41 @@ services:
 networks:
   mynet:
 
+```
+
+## Scripts
+
+### Make backup manually
+
+`backup [mongodump args]`
+
+Example:
+
+```sh
+docker run -e MONGO_URL=mongodb://host \
+  -v /backup:/data/backup megahertz/mongo-backup-alpine backup
+```
+
+### Get list of existing backups
+
+`list`
+
+Example:
+
+```sh
+docker run -v /backup:/data/backup megahertz/mongo-backup-alpine list
+```
+
+### Restore from backup
+
+`restore BACKUP_FILE [mongorestore args]`
+
+Example:
+
+```sh
+docker run -e MONGO_URL=mongodb://host \
+  -v /backup:/data/backup megahertz/mongo-backup-alpine \
+  restore 2018-02-01-04-00-00.gz
 ```
 
 ## License

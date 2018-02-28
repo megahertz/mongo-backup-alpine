@@ -21,4 +21,4 @@ if [ ! -f "${ARCHIVE}" ]; then
   exit 1
 fi
 
-mongorestore --uri ${MONGO_URL} --gzip --archive=${ARCHIVE}
+mongorestore --uri ${MONGO_URL} --gzip --archive=${ARCHIVE} ${@:2}
