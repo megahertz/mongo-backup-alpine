@@ -14,7 +14,7 @@ docker run -e MONGO_URL=mongodb://host \
   -v /backup:/data/backup megahertz/mongo-backup-alpine
 ```
 
-### Volumes
+#### Volumes
 The image writes backups to /data/backup, so you need to mount this
 path on host machine to store backups.
 
