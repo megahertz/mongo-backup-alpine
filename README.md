@@ -46,11 +46,11 @@ services:
       - ./db:/data/db
 
   mongo-backup:
-    image: megahertz/mongo-backup-alpine:latest
+    image: megahertz/mongo-backup-alpine:0.5
     depends_on:
       - mongo
     environment:
-      - MONGO_URL=mongodb://mongo
+      - MONGO_URL=mongodb://mongo/my_db
     networks:
       - mynet
     restart: always
@@ -60,6 +60,12 @@ services:
 networks:
   mynet:
 
+```
+
+With this docker-compose.yml, you can restore the databse using:
+
+```sh
+docker-compose run --rm mongo-backup restore 2018-01-01-00-00-00.gz --drop
 ```
 
 ## Scripts
