@@ -16,7 +16,7 @@ docker run -e MONGO_URL=mongodb://host \
 
 #### Volumes
 The image writes backups to /data/backup, so you need to mount this
-path on host machine to store backups.
+path on a host machine to store backups.
 
 #### Environment variables:
 
@@ -26,10 +26,10 @@ MONGO_URL       | (required)            | Connection string to MongoDB
 BACKUP_COMMAND  | /usr/local/bin/backup | You can override it to pass mongodump args
 BACKUP_LIFETIME | 10                    | Delete backups older than N days
 BACKUP_PATTERN  | "+%Y-%m-%d-%H-%M-%S"  | Pattern for backup name
-BACKUP_SCHEDULE | "0 4 * * *"           | How often to make backup, crontab format
+BACKUP_SCHEDULE | "0 4 * * *"           | How often to make backups, crontab format
 
 By default, the service makes backup each day at 4am. If you're not
-familar with crontab, you can
+familiar with crontab, you can
 [check the examples](https://crontab.guru/examples.html)
 
 
@@ -63,7 +63,7 @@ networks:
 
 ```
 
-With this docker-compose.yml, you can restore the databse using:
+With this docker-compose.yml, you can restore the database using:
 
 ```sh
 docker-compose run --rm mongo-backup restore 2018-01-01-00-00-00.gz --drop
@@ -82,7 +82,7 @@ docker run -e MONGO_URL=mongodb://host \
   -v /backup:/data/backup megahertz/mongo-backup-alpine backup
 ```
 
-### Get list of existing backups
+### Get the list of existing backups
 
 `list`
 
