@@ -4,5 +4,5 @@ set -e
 
 .check-env
 
-echo "${BACKUP_SCHEDULE} /usr/local/bin/backup" > /etc/crontab
+echo "${BACKUP_SCHEDULE} ${BACKUP_COMMAND}" > /etc/crontab
 exec "/usr/bin/supercronic" "/etc/crontab"
