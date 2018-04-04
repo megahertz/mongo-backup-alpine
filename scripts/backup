@@ -8,6 +8,6 @@ DATE=$(date "${BACKUP_PATTERN}")
 OUT_FILE="${BACKUP_PATH}/${DATE}.gz"
 
 # Remove old backups
-find ${BACKUP_PATH} -mtime +${BACKUP_LIFETIME} -type f -delete
+find ${BACKUP_PATH} -name '*.gz' -mtime +${BACKUP_LIFETIME} -type f -delete
 
 mongodump --uri ${MONGO_URL} --gzip --archive=${OUT_FILE} ${@}
